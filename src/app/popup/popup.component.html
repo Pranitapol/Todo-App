@@ -1,0 +1,52 @@
+
+<div class="container">
+    <div class="wrapper">
+    <h1 mat-dialog-title style="text-align: center;">Add Task</h1>
+<div mat-dialog-content>
+  <form [formGroup]="taskGroup">
+    <div>
+    <mat-form-field class="input-ele">
+    <input formControlName="task_title" matInput placeholder="enter task title">
+  </mat-form-field>
+  @if(getFormControls('task_title')?.errors?.['required'] && getFormControls('task_title')?.touched){
+    <span style="color: red;">title is required *</span>
+  }
+  @if(taskGroup.hasError('noControlValueChange') && getFormControls('task_title')?.dirty)
+  {
+    <small style="color:red">no changes detected</small>
+  }
+  
+  </div>
+  <div>
+  <mat-form-field class="input-ele">
+    <!-- <input formControlName="task_desc" matInput placeholder="enter task description"> -->
+    <textarea formControlName="task_desc" placeholder="enter task description" matInput matTextareaAutosize="true"></textarea>
+  </mat-form-field>
+  @if(getFormControls('task_desc')?.errors?.['required'] && getFormControls('task_desc')?.touched){
+    <span style="color:red">description is required*</span>
+  }
+    @if(taskGroup.hasError('noControlValueChange') && getFormControls('task_desc')?.dirty)
+    {
+      <small style="color:red">no changes detected</small>
+    }
+  </div>
+  </form>
+</div>
+<div mat-dialog-actions class="actions">
+    <button [disabled]='taskGroup.invalid' mat-flat-button (click)="SaveTask()" [ngStyle]="data.editFlag?{'display':'none'}:{'display':'flex'}">Save</button>
+    <button mat-flat-button (click)="closeDialog()">Close</button>
+    <button [disabled]="getFormControls('task_title')?.pristine || ( (getFormControls('task_title')?.dirty && taskGroup.hasError('noControlValueChange')) || (getFormControls('task_desc')?.dirty && taskGroup.hasError('noControlValueChange')))" mat-flat-button (click)="updateTask()" [ngStyle]="data.editFlag?{'display':'flex'}:{'display':'none'}">Update</button>
+</div>
+</div>
+@if(successMessage){
+  <div class="toaster-container">
+    <div class="toaster-wrapper">
+      <app-toaster-comp></app-toaster-comp>
+
+    </div>
+  </div>
+}
+</div>
+
+
+

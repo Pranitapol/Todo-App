@@ -1,0 +1,33 @@
+
+<div class="container">
+    <div class="wrapper">
+        <h3>TODO APP</h3>
+       @if(taskArr && taskArr.length>2){
+         <input matInput type="text" placeholder="search task from the list" [value]="" (input)="onChange($event)"/>
+       }
+        <button mat-icon-button (click)="addTask()"><mat-icon fontIcon="add"></mat-icon></button>
+    </div>
+     
+<div style="overflow-y: auto;max-height:325px;">
+<mat-nav-list *ngFor="let task of isSearching? filteredArr : taskArr">
+  @if(task.id!==0){
+<mat-checkbox class="example-margin" [(ngModel)]='checked' (change)="onCheck(task)"></mat-checkbox>
+  <div *ngIf="task.title" class="list-item" >
+    <span style="display: flex;align-items: center; flex:2;margin-left:1%">{{task.title}}</span>
+    <div class="actions">
+      <button mat-icon-button (click)="onEdit(task)"><mat-icon fontIcon="edit" style="font-size: 22px;">edit</mat-icon></button>
+      <button mat-icon-button (click)="onDelete(task.id)"><mat-icon fontIcon="delete" style="font-size: 22px;">delete</mat-icon></button>
+      <button mat-icon-button (click)="onRightClick(task)"><mat-icon fontIcon="arrow_right" style="font-size: 27px;">arrow_right</mat-icon></button>
+    </div>
+  </div>
+}
+</mat-nav-list>
+</div>
+         @if(flag){
+          <div class="container-task">
+            <div class="wrapper-task">
+                <app-showtask [showData]="onrightClickData" (cancel)="flag=false"></app-showtask>
+              </div>
+            </div>
+         }
+</div>
