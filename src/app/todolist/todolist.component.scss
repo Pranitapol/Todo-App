@@ -1,6 +1,7 @@
 .container{
     width: 600px;
-    height: 450px;
+    // height: 450px;
+    height: 530px;
     background-color: rgb(170, 200, 201);
     translate: 65% 10%;
 }
@@ -79,4 +80,45 @@ mat-icon{
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         z-index: 1001;
     }
+
   }
+
+.delete-btn{
+    position: absolute;
+    top:86%;
+    left:80%;
+}
+
+.toaster-container{
+    position: absolute;
+    top:40%;
+    // left:20%;
+    width: 300px;
+    height: 100px;
+    z-index: 1000;
+    translate: 10% 40%;
+    background-color: green;
+    color:white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+  @media (max-width:'865px') {
+    .container{
+        height: 550px;
+        width: 300px;
+        translate: 9% 9%;
+        padding: 10px;
+  }
+
+}
+
+@media (min-width:'390px') and (max-width:'844px') {
+    .delete-btn{
+        position: absolute;
+        left:63%;
+        top:90%
+     }
+}
