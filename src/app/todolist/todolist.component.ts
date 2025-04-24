@@ -11,17 +11,19 @@ import { TODOList } from '../store/todo.model';
 import { Observable } from 'rxjs';
 import { CommonModule, NgIf } from '@angular/common';
 import {MatListModule} from '@angular/material/list';
-import { deleteTodo } from '../store/action';
+import { deleteMany, deleteTodo } from '../store/action';
 import { ShowtaskComponent } from './showtask/showtask.component';
 import {MatInputModule} from '@angular/material/input';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
+import { ToasterServiceService } from '../toaster-service.service';
+import { ToasterCompComponent } from '../toaster-comp/toaster-comp.component';
 
 @Component({
   selector: 'app-todolist',
   standalone: true,
   imports: [MatIconModule,MatButtonModule,CommonModule,MatListModule,NgIf,ShowtaskComponent,MatInputModule,
-    MatCheckboxModule,FormsModule
+    MatCheckboxModule,FormsModule,ToasterCompComponent
   ],
   templateUrl: './todolist.component.html',
   styleUrl: './todolist.component.scss'
@@ -38,8 +40,10 @@ export class TodolistComponent implements OnInit {
   filteredArr:TODOList[]=[];
   isSearching:boolean=false;
   checked:boolean=false;
+  deleteItems:any=[]
+  selectedIds: Set<number> = new Set();
 
-  constructor(private dialog: MatDialog,private store:Store<{addTodo:TODOList[]}>) {
+  constructor(private dialog: MatDialog,private store:Store<{addTodo:TODOList[]}>,private toaster:ToasterServiceService) {
     this.todolist=this.store.select('addTodo')
     console.log('tdodos',this.todolist);
   }
@@ -49,7 +53,9 @@ export class TodolistComponent implements OnInit {
       console.log('res',res);
       this.taskArr=res;
       this.isSearching=false
+     
     })
+    this.checked=false
   }
 
   addTask(){
@@ -70,6 +76,7 @@ export class TodolistComponent implements OnInit {
   }
 
   onDelete(id:number){
+    console.log('to delete',id)
     this.store.dispatch(deleteTodo({id}))
   }
 
@@ -93,8 +100,28 @@ onRightClick(task:TODO){
   }
 
 
-  onCheck(task:any){
+  onCheck(event:any,task:any){
+    const isChecked = event.checked;
+    this.checked=true
+    if (isChecked) {
+      this.selectedIds.add(task.id);
+    } else {
+      this.selectedIds.delete(task.id);
+    }
+  
+    console.log('Currently selected IDs:', [...this.selectedIds]);
+  }
+  
+  deleteSelected(){
+   this.checked=false
+      this.toaster.showToasterSuccess('Please select item to delete')
+    
+    const itemsToDelete = this.taskArr.filter(item => this.selectedIds.has(item.id));
 
-    console.log(task,this.checked)
+    console.log('Deleting selected items:', itemsToDelete);
+  
+    this.store.dispatch(deleteMany({ deletedItems: itemsToDelete }));
+  
+    this.selectedIds.clear(); // clear selected ID
   }
 }

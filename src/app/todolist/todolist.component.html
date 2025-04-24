@@ -8,26 +8,32 @@
         <button mat-icon-button (click)="addTask()"><mat-icon fontIcon="add"></mat-icon></button>
     </div>
      
-<div style="overflow-y: auto;max-height:325px;">
-<mat-nav-list *ngFor="let task of isSearching? filteredArr : taskArr">
-  @if(task.id!==0){
-<mat-checkbox class="example-margin" [(ngModel)]='checked' (change)="onCheck(task)"></mat-checkbox>
-  <div *ngIf="task.title" class="list-item" >
-    <span style="display: flex;align-items: center; flex:2;margin-left:1%">{{task.title}}</span>
-    <div class="actions">
-      <button mat-icon-button (click)="onEdit(task)"><mat-icon fontIcon="edit" style="font-size: 22px;">edit</mat-icon></button>
-      <button mat-icon-button (click)="onDelete(task.id)"><mat-icon fontIcon="delete" style="font-size: 22px;">delete</mat-icon></button>
-      <button mat-icon-button (click)="onRightClick(task)"><mat-icon fontIcon="arrow_right" style="font-size: 27px;">arrow_right</mat-icon></button>
-    </div>
+  <div style="overflow-y: auto;max-height:325px;">
+    <mat-nav-list *ngFor="let task of isSearching? filteredArr : taskArr">
+      <!-- @if(task.id!==0){ -->
+    <mat-checkbox class="example-margin" [checked]="selectedIds.has(task.id)" (change)="onCheck($event,task)"></mat-checkbox>
+      <div *ngIf="task.title" class="list-item" >
+        <span style="display: flex;align-items: center; flex:2;margin-left:1%">{{task.title}}</span>
+        <div class="actions">
+          <button mat-icon-button (click)="onEdit(task)"><mat-icon fontIcon="edit" style="font-size: 22px;">edit</mat-icon></button>
+          <button mat-icon-button (click)="onDelete(task.id)"><mat-icon fontIcon="delete" style="font-size: 22px;">delete</mat-icon></button>
+          <button mat-icon-button (click)="onRightClick(task)"><mat-icon fontIcon="arrow_right" style="font-size: 27px;">arrow_right</mat-icon></button>
+        </div>
+      </div>
+    <!-- } -->
+    </mat-nav-list>
   </div>
-}
-</mat-nav-list>
-</div>
-         @if(flag){
-          <div class="container-task">
-            <div class="wrapper-task">
-                <app-showtask [showData]="onrightClickData" (cancel)="flag=false"></app-showtask>
-              </div>
-            </div>
-         }
+
+    @if(todolist && taskArr.length>1){
+      <div class='delete-btn'>
+      <button mat-flat-button (click)="deleteSelected()">Delete<mat-icon fontIcon="delete">delete</mat-icon></button>
+      </div>     
+    }
+    @if(flag){
+      <div class="container-task">
+          <div class="wrapper-task">
+            <app-showtask [showData]="onrightClickData" (cancel)="flag=false"></app-showtask>
+          </div>
+      </div>
+    }
 </div>

@@ -54,18 +54,19 @@ SaveTask(){
   const task={
     // id:this.count,
     title:this.taskGroup.value['task_title'],
-    description:this.taskGroup.value['task_desc'],
+    description:this.taskGroup.value['task_desc'], 
+    completed:false
   }
   this.store.dispatch(addTodoList({task}))
   this.toaster.showToasterSuccess('Task saved successfully....');
   setTimeout(() => { 
     this.dialogRef.close()
-  }, 1000);
+  }, 600);
 
   this.dialogRef.afterClosed().subscribe(() => {
     setTimeout(() => {
       this.successMessage=false
-    }, 100); // small delay (optional)
+    }, 1000); // small delay (optional)
   });
   console.log('task added',task)
 }

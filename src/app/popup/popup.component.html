@@ -35,7 +35,7 @@
 <div mat-dialog-actions class="actions">
     <button [disabled]='taskGroup.invalid' mat-flat-button (click)="SaveTask()" [ngStyle]="data.editFlag?{'display':'none'}:{'display':'flex'}">Save</button>
     <button mat-flat-button (click)="closeDialog()">Close</button>
-    <button [disabled]="getFormControls('task_title')?.pristine || ( (getFormControls('task_title')?.dirty && taskGroup.hasError('noControlValueChange')) || (getFormControls('task_desc')?.dirty && taskGroup.hasError('noControlValueChange')))" mat-flat-button (click)="updateTask()" [ngStyle]="data.editFlag?{'display':'flex'}:{'display':'none'}">Update</button>
+    <button [disabled]="(getFormControls('task_title')?.pristine && getFormControls('task_desc')?.pristine) || ( (getFormControls('task_title')?.dirty && taskGroup.hasError('noControlValueChange')) || (getFormControls('task_desc')?.dirty && taskGroup.hasError('noControlValueChange')))" mat-flat-button (click)="updateTask()" [ngStyle]="data.editFlag?{'display':'flex'}:{'display':'none'}">Update</button>
 </div>
 </div>
 @if(successMessage){
