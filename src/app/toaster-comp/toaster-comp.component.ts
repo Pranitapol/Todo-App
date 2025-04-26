@@ -16,7 +16,6 @@ export class ToasterCompComponent implements OnInit {
   ngOnInit(): void {
 
       this.toaster.toasterSuccess.subscribe((res)=>{
-        console.log('in toaster component',res);
         if (res) {
           this.successToaster = res;
           setTimeout(() => {

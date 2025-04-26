@@ -19,7 +19,6 @@ export class ShowtaskComponent implements OnInit {
 constructor(){}
 
 ngOnInit(): void {
-  console.log('oninit in task',this.showData)
 }
 
 onClose(){
