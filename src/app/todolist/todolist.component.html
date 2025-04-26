@@ -2,8 +2,8 @@
 <div class="container">
     <div class="wrapper">
         <h3>TODO APP</h3>
-       @if(taskArr && taskArr.length>2){
-         <input matInput type="text" placeholder="search task from the list" [value]="" (input)="onChange($event)"/>
+       @if(taskArr && taskArr.length>1){
+         <input matInput type="text" placeholder="search task from the list" (input)="onChange($event)"/>
        }
         <button mat-icon-button (click)="addTask()"><mat-icon fontIcon="add"></mat-icon></button>
     </div>
@@ -22,6 +22,9 @@
       </div>
     <!-- } -->
     </mat-nav-list>
+    <div *ngIf="isSearching==true && filteredArr.length==0">
+      <h2 class="notFound"> Task Not Found ...</h2>
+    </div>
   </div>
 
     @if(todolist && taskArr.length>1){
@@ -35,5 +38,11 @@
             <app-showtask [showData]="onrightClickData" (cancel)="flag=false"></app-showtask>
           </div>
       </div>
+    }
+
+    @if(deleteFlag==true){
+      <div class="toaster-container">
+      <app-toaster-comp></app-toaster-comp>
+    </div>
     }
 </div>

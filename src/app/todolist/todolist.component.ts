@@ -4,9 +4,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from '../popup/popup.component';
 import { Store } from '@ngrx/store';
-import { AppState, TODO } from '../store/state';
-import {selectAllTasks} from '../store/selector'
-import {todoReducer} from '../store/reducer'
+import {  TODO } from '../store/state';
 import { TODOList } from '../store/todo.model';
 import { Observable } from 'rxjs';
 import { CommonModule, NgIf } from '@angular/common';
@@ -42,15 +40,13 @@ export class TodolistComponent implements OnInit {
   checked:boolean=false;
   deleteItems:any=[]
   selectedIds: Set<number> = new Set();
-
+  deleteFlag=false
   constructor(private dialog: MatDialog,private store:Store<{addTodo:TODOList[]}>,private toaster:ToasterServiceService) {
     this.todolist=this.store.select('addTodo')
-    console.log('tdodos',this.todolist);
   }
 
   ngOnInit(){
   this.todolist?.subscribe((res)=>{
-      console.log('res',res);
       this.taskArr=res;
       this.isSearching=false
      
@@ -76,7 +72,13 @@ export class TodolistComponent implements OnInit {
   }
 
   onDelete(id:number){
-    console.log('to delete',id)
+    this.deleteFlag=true;
+
+    setTimeout(() => {
+      this.deleteFlag=false
+    }, 1000);
+
+    this.toaster.showToasterSuccess('deleted successfully...')
     this.store.dispatch(deleteTodo({id}))
   }
 
@@ -92,7 +94,7 @@ onRightClick(task:TODO){
   onChange(event:Event){
     const input = event.target as HTMLInputElement;
       this.filteredArr=this.taskArr.filter((item:any)=>{
-      if(item.title.includes(input.value)){
+      if(item.title.toLowerCase().includes(input.value.toLowerCase())){
         this.isSearching=true
         return item
       }
@@ -109,16 +111,19 @@ onRightClick(task:TODO){
       this.selectedIds.delete(task.id);
     }
   
-    console.log('Currently selected IDs:', [...this.selectedIds]);
   }
   
   deleteSelected(){
-   this.checked=false
-      this.toaster.showToasterSuccess('Please select item to delete')
+    this.deleteFlag=true;
+
+    setTimeout(() => {
+      this.deleteFlag=false
+    }, 1000);
+
+    this.checked=false
+      this.toaster.showToasterSuccess('Deleted Successfully...')
     
     const itemsToDelete = this.taskArr.filter(item => this.selectedIds.has(item.id));
-
-    console.log('Deleting selected items:', itemsToDelete);
   
     this.store.dispatch(deleteMany({ deletedItems: itemsToDelete }));
   

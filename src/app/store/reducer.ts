@@ -1,12 +1,8 @@
 import {createReducer, on} from '@ngrx/store';
-import {TODO, todos} from './state'
 import {addTodoList,deleteTodo,editTodo,getTodoList,deleteMany} from './action';
 import { TODOList } from './todo.model';
 
-// export interface TODOS{
-//     id:number,
-//     todosList:TODO[]
-// }
+
 export const initialState:TODOList[]=[
    // {id:0,title:'',description:'',completed:false}
 ]
@@ -16,7 +12,6 @@ export const todoReducer=createReducer(
     on(addTodoList,(state,{task}) =>{return [...state,{id:idCounter++,title:task.title,description:task.description,completed:task.completed}]}),
 
     on(deleteTodo,(state,{id})=>{
-        console.log('in delete',state, id)
         return state.filter((item)=>item.id!==id)}
     ),
 

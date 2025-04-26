@@ -9,6 +9,16 @@
     justify-content: center;  /* Center horizontally */
     align-items: center;  /* Center vertically */
     z-index: 1000;  
+    animation: popupbox 0.7s normal ease-out;
+}
+
+@keyframes popupbox{
+    0%{
+        transform: scale(7%);
+    }
+    100%{
+        transform: scale(100%);
+    }
 }
 
 .wrapper{
@@ -31,6 +41,7 @@
     .input-ele{
         display: flex;
     }
+  
 }
 
 .toaster-container{

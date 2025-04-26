@@ -4,9 +4,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input'
-import { Store, StoreModule } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import {addTodoList, editTodo} from '../store/action';
-import {todoReducer} from '../store/reducer'
 import { TODOList } from '../store/todo.model';
 import { CommonModule, NgIf } from '@angular/common';
 import { ToasterServiceService } from '../toaster-service.service';
@@ -24,7 +23,7 @@ import { noChangeValidator} from '../validators/noChangeValidator';
 export class PopupComponent implements OnInit{
   taskGroup:FormGroup;
   successMessage:boolean=false;
- count=0
+//  count=0
  initialFormValue:any;
 
 constructor(public dialogRef:MatDialogRef<PopupComponent>,
@@ -38,13 +37,10 @@ constructor(public dialogRef:MatDialogRef<PopupComponent>,
   })
 }
 ngOnInit(): void {
-  console.log('in oninit',this.data)
-  // this.toaster.toasterSuccess.subscribe((res)=>{
-  //   this.successToaster=res;
-  // })
   this.initialFormValue=JSON.parse(JSON.stringify(this.taskGroup.value))
   this.taskGroup.setValidators([noChangeValidator(this.initialFormValue)])
 }
+
 closeDialog() {
   this.dialogRef.close();
 }
@@ -68,7 +64,6 @@ SaveTask(){
       this.successMessage=false
     }, 1000); // small delay (optional)
   });
-  console.log('task added',task)
 }
 
   updateTask(){
