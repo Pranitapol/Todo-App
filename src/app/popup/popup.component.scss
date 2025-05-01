@@ -62,7 +62,35 @@
 
 @media (max-width:'765px') {
     .wrapper{
-        width: 300px;
+        width: 284px;
   }
  
+}
+
+@media (min-width:'360px') and (max-width:'740px') {
+
+    .wrapper{    
+    .actions{
+            display: flex;
+                position: relative;
+                top: 10%;
+                left: -10%;
+        }
+    }
+
+    .toaster-container{
+        position: absolute;
+        top:29%;
+        left:10%;
+        width: 280px;
+        height: 75px;
+        z-index: 1000;
+        // translate: 10% 10%;
+        background-color: green;
+        color:white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+    }
 }

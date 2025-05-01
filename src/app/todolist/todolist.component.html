@@ -8,7 +8,7 @@
         <button mat-icon-button (click)="addTask()"><mat-icon fontIcon="add"></mat-icon></button>
     </div>
      
-  <div style="overflow-y: auto;max-height:325px;">
+  <div class='content-box' >
     <mat-nav-list *ngFor="let task of isSearching? filteredArr : taskArr">
       <!-- @if(task.id!==0){ -->
     <mat-checkbox class="example-margin" [checked]="selectedIds.has(task.id)" (change)="onCheck($event,task)"></mat-checkbox>
