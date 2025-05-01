@@ -114,6 +114,7 @@ onRightClick(task:TODO){
   }
   
   deleteSelected(){
+    if(this.checked)
     this.deleteFlag=true;
 
     setTimeout(() => {
@@ -121,7 +122,7 @@ onRightClick(task:TODO){
     }, 1000);
 
     this.checked=false
-      this.toaster.showToasterSuccess('Deleted Successfully...')
+    this.toaster.showToasterSuccess('Deleted Successfully...')
     
     const itemsToDelete = this.taskArr.filter(item => this.selectedIds.has(item.id));
   
